@@ -17,7 +17,6 @@ coming soon
 
 ## Usage
 ```c#
-
 // Specify width, height and count of ways to walk.
 var pathfinder = new Pathfinder(3, 5, Ways.FOUR);
 
@@ -26,6 +25,9 @@ pathfinder = pathfinder.From(1, 0).To(3, 3);
 
 // Then start calculation.
 pathfinder = pathfinder.Pathfind();
+
+// Write more simply.
+// var cells = new Pathfinder(3, 5, Ways.FOUR).From(1, 0).To(3, 3).Pathfind().Cells;
 
 // After calculation, you can access the result like this.
 Debug.Log(pathfinder.Cells[2, 4].IsPath); // Is this cell walked?
