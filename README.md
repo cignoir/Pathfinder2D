@@ -12,7 +12,7 @@ coming soon
 * Support 4-ways and 8-ways.
 * No dependencies except UnityEngine.
 * Written in C#.
-* Easy to customize cause.
+* Easy to customize.
 * Bundled a demo project.
 
 ## Usage
