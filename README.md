@@ -4,7 +4,7 @@ Pathfinder2D
 This is an implementation of A* pathfinding algorithm for Unity using 2D Arrays.
 
 ## Download
-comming soon
+coming soon
 
 ## Features
 * Unity only.
@@ -16,7 +16,8 @@ comming soon
 * Bundled a demo project.
 
 ## Usage
-'''c#
+```c#
+
 // Specify width, height and count of ways to walk.
 var pathfinder = new Pathfinder(3, 5, Ways.FOUR);
 
@@ -29,7 +30,7 @@ pathfinder = pathfinder.Pathfind();
 // After calculation, you can access the result like this.
 Debug.Log(pathfinder.Cells[2, 4].IsPath); // Is this cell walked?
 Debug.Log(pathfinder.Cells[2, 4].DistanceSteps);  // Showing count of steps.
-'''
+```
 
 ## License
 Pathfinder2D is released under the MIT license. 
