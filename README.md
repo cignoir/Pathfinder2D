@@ -8,7 +8,7 @@ This is an implementation of A* pathfinding algorithm for Unity using 2D Arrays.
 ## Web Demo
 https://dl.dropboxusercontent.com/u/40069781/Pathfinder2D/Pathfinder2D.html
 
-## Install
+## Installation
 Import Pathfinder2D.unitypackage into your unity project.
 
 ## Features
