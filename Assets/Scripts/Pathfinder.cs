@@ -12,6 +12,8 @@ public class Pathfinder
     static int size_x;
 	static int size_y;
 
+	const int DEFAULT_STEPS = 10000;
+
     public enum PathfinderContent
 	{
 		Empty,
@@ -23,12 +25,15 @@ public class Pathfinder
 	public class PathfinderCell
 	{
 		public PathfinderContent ContentCode { get; set; }
-		public int DistanceSteps { get; set; }
+		public int Steps { get; set; }
 		public bool IsPath { get; set; }
+		public bool IsWall {
+			get { return ContentCode == PathfinderContent.Wall; }
+		}
 
 		public PathfinderCell(){
 			ContentCode = PathfinderContent.Empty;
-			DistanceSteps = 10000;
+			Steps = DEFAULT_STEPS;
 		}
 	}
 
@@ -88,7 +93,7 @@ public class Pathfinder
 		{
 			int x = (int)point.x;
 			int y = (int)point.y;
-			Cells[x, y].DistanceSteps = 10000;
+			Cells[x, y].Steps = 10000;
 			Cells[x, y].IsPath = false;
 		}
 	}
@@ -104,7 +109,7 @@ public class Pathfinder
 		}
 
 
-		Cells[startX, startY].DistanceSteps = 0;
+		Cells[startX, startY].Steps = 0;
 		
 		while (true)
 		{
@@ -119,7 +124,7 @@ public class Pathfinder
 
 				if (CellOpen(x, y))
 				{
-					int passHere = Cells[x, y].DistanceSteps;
+					int passHere = Cells[x, y].Steps;
 					
 					foreach (Vector2 moveVector2 in ValidMoves(x, y))
 					{
@@ -127,9 +132,9 @@ public class Pathfinder
 						int newY = (int)moveVector2.y;
 						int newPass = passHere + 1;
 						
-						if (Cells[newX, newY].DistanceSteps > newPass)
+						if (Cells[newX, newY].Steps > newPass)
 						{
-							Cells[newX, newY].DistanceSteps = newPass;
+							Cells[newX, newY].Steps = newPass;
 							madeProgress = true;
 						}
 					}
@@ -155,6 +160,15 @@ public class Pathfinder
 		Cells[x, y].ContentCode = Pathfinder.PathfinderContent.Goal;
 		return this;
 	}
+
+	public Pathfinder Between(Vector2 vec1, Vector2 vec2){
+		return From ((int)vec1.x, (int)vec1.y).To((int)vec2.x, (int)vec2.y);
+	}
+
+	public Pathfinder Wall(int x, int y){
+		Cells[x, y].ContentCode = Pathfinder.PathfinderContent.Wall;
+		return this;
+    }
 	
 	static private bool ValidCoordinates(int x, int y)
 	{
@@ -215,6 +229,8 @@ public class Pathfinder
 		{
 			return;
 		}
+
+		Cells[pointX, pointY].IsPath = true;
 		
 		while (true)
 		{
@@ -223,7 +239,7 @@ public class Pathfinder
 			
 			foreach (Vector2 moveVector2 in ValidMoves(pointX, pointY))
 			{
-				int count = Cells[(int)moveVector2.x, (int)moveVector2.y].DistanceSteps;
+				int count = Cells[(int)moveVector2.x, (int)moveVector2.y].Steps;
 				if (count < lowest)
 				{
 					lowest = count;
