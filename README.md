@@ -5,8 +5,8 @@ Pathfinder2D
 
 This is an implementation of A* pathfinding algorithm for Unity using 2D Arrays.
 
-## Download
-coming soon
+## Web Demo
+https://dl.dropboxusercontent.com/u/40069781/Pathfinder2D/Pathfinder2D.html
 
 ## Features
 * Unity only.
