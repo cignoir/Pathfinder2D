@@ -23,6 +23,9 @@ var pathfinder = new Pathfinder(3, 5, Ways.FOUR);
 // Specify the start-point and end-point.
 pathfinder = pathfinder.From(1, 0).To(3, 3);
 
+// Place walls.
+pathfinder = pathfinder.Wall(1, 3);
+
 // Then start calculation.
 pathfinder = pathfinder.Pathfind();
 
@@ -30,8 +33,8 @@ pathfinder = pathfinder.Pathfind();
 // var cells = new Pathfinder(3, 5, Ways.FOUR).From(1, 0).To(3, 3).Pathfind().Cells;
 
 // After calculation, you can access the result like this.
-Debug.Log(pathfinder.Cells[2, 4].IsPath); // Is this cell walked?
-Debug.Log(pathfinder.Cells[2, 4].DistanceSteps);  // Showing count of steps.
+Debug.Log(pathfinder.Cells[2, 4].IsPath); // Is this cell the path?
+Debug.Log(pathfinder.Cells[2, 4].Steps);  // Showing count of distance steps.
 ```
 
 ## License
