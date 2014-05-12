@@ -1,10 +1,16 @@
 Pathfinder2D
 ============
 
-This is an implementation of A* pathfinding algorithm for Unity using 2D Arrays.
+![logo](https://dl.dropboxusercontent.com/u/40069781/Pathfinder2D/7708b0f1e1ed639c0972977cd1fa09cb.png)
 
-## Download
-coming soon
+This is an implementation of A* pathfinding algorithm for Unity using 2D Arrays.  
+This will helps you to develop grid-based games etc.
+
+## Web Demo
+https://dl.dropboxusercontent.com/u/40069781/Pathfinder2D/Pathfinder2D.html
+
+## Installation
+Import Pathfinder2D.unitypackage into your unity project.
 
 ## Features
 * Unity only.
@@ -23,6 +29,9 @@ var pathfinder = new Pathfinder(3, 5, Ways.FOUR);
 // Specify the start-point and end-point.
 pathfinder = pathfinder.From(1, 0).To(3, 3);
 
+// Place walls.
+pathfinder = pathfinder.Wall(1, 3);
+
 // Then start calculation.
 pathfinder = pathfinder.Pathfind();
 
@@ -30,8 +39,8 @@ pathfinder = pathfinder.Pathfind();
 // var cells = new Pathfinder(3, 5, Ways.FOUR).From(1, 0).To(3, 3).Pathfind().Cells;
 
 // After calculation, you can access the result like this.
-Debug.Log(pathfinder.Cells[2, 4].IsPath); // Is this cell walked?
-Debug.Log(pathfinder.Cells[2, 4].DistanceSteps);  // Showing count of steps.
+Debug.Log(pathfinder.Cells[2, 4].IsPath); // Is this cell the path?
+Debug.Log(pathfinder.Cells[2, 4].Steps);  // Showing count of distance steps.
 ```
 
 ## License
