@@ -14,36 +14,16 @@ Import Pathfinder2D.unitypackage into your unity project.
 
 ## Features
 * Unity only.
-* Easy to simulate A* pathfinding using 2D Arrays.
-* Support 4-ways and 8-ways.
-* No dependencies except UnityEngine.
-* Written in C#.
-* Easy to customize.
-* Bundled a demo project.
+* Easy to simulate A* pathfinding using 2D arrays.
+* Supports 4-ways and 8-ways as moving directions.
+* Full C# scripts and the demo scene included.
+* Easy to customize scripts.
 
 ![ways](https://dl.dropboxusercontent.com/u/40069781/Pathfinder2D/arrow.png)
 
 ## Usage
-```c#
-// Specify width, height and count of ways to walk.
-var pathfinder = new Pathfinder(3, 5, Ways.FOUR);
-
-// Specify the start-point and end-point.
-pathfinder = pathfinder.From(1, 0).To(3, 3);
-
-// Place walls.
-pathfinder = pathfinder.Wall(1, 3);
-
-// Then start calculation.
-pathfinder = pathfinder.Pathfind();
-
-// Write more simply.
-// var cells = new Pathfinder(3, 5, Ways.FOUR).From(1, 0).To(3, 3).Pathfind().Cells;
-
-// After calculation, you can access the result like this.
-Debug.Log(pathfinder.Cells[2, 4].IsPath); // Is this cell the path?
-Debug.Log(pathfinder.Cells[2, 4].Steps);  // Showing count of distance steps.
-```
+Sorry, docs are under construction.
+Try to play the demo scene included in the package. 
 
 ## License
 Pathfinder2D is released under the MIT license. 
