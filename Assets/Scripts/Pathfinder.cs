@@ -255,14 +255,14 @@ public class Pathfinder: MonoBehaviour
 		Route.Reverse();
 		
 		for(int i = 0; i < Route.Count - 1; i++){
-			if(Route[i + 1].x > Route[i].x){
+			if(Route[i + 1].x < Route[i].x){
 				Cells[Route[i].x, Route[i].y].Direction = Direction.E;
-			} else if(Route[i + 1].x < Route[i].x){
+			} else if(Route[i + 1].x > Route[i].x){
 				Cells[Route[i].x, Route[i].y].Direction = Direction.W;
 			} else {
-				if(Route[i + 1].y > Route[i].y){
+				if(Route[i + 1].y < Route[i].y){
 					Cells[Route[i].x, Route[i].y].Direction = Direction.N;
-				} else if(Route[i + 1].y < Route[i].y){
+				} else if(Route[i + 1].y > Route[i].y){
 					Cells[Route[i].x, Route[i].y].Direction = Direction.S;
 				} else {
 					Cells[Route[i].x, Route[i].y].Direction = Direction.C;

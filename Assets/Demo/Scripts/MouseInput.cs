@@ -13,11 +13,19 @@ public class MouseInput : MonoBehaviour {
 		if(Physics.Raycast(ray, out hit, 100)){
 			var other = hit.collider.gameObject;
 			if(other.CompareTag("Cell")){
-				var colision = other.GetComponent<PathfinderCell>();
+				var collision = other.GetComponent<PathfinderCell>();
 
 				pathfinder.ClearLogic();
-				pathfinder = pathfinder.From(1, 0).To(colision.x, colision.y);
+				pathfinder = pathfinder.From(1, 0).To(collision.x, collision.y);
 				pathfinder = pathfinder.Pathfind();
+
+				var gui = GameObject.FindGameObjectWithTag("GUIText");
+				gui.guiText.text = 
+					"(x, y) = (" + collision.x + ", " + collision.y + ")"
+					+ "\n IsPath = " + collision.IsPath.ToString()
+					+ "\n IsWall = " + collision.IsWall.ToString()
+					+ "\n Direction = " + collision.Direction.ToString()
+					+ "\n Steps = " + collision.Steps.ToString();
 			}
 		}
 	}
