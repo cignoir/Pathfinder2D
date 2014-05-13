@@ -9,7 +9,7 @@ public enum Ways
 
 public enum Direction
 {
-	C, N, E, W, S
+	C, N, E, W, S, NE, NW, SE, SW
 }
 
 public enum PathfinderContent
@@ -25,8 +25,9 @@ public class Pathfinder: MonoBehaviour
 	public int size_x;
 	public int size_y;
 	public Ways ways;
-	
-	public Vector2[] Movements { get; set; }
+
+
+	public List<Vector2> Movements { get; set; }
 	public PathfinderCell[,] Cells { get; set; }
 	public List<PathfinderCell> Route { get; set; }
 
@@ -39,7 +40,7 @@ public class Pathfinder: MonoBehaviour
 	{
 		if (ways == Ways.FOUR)
 		{
-			Movements = new Vector2[]
+			Movements = new List<Vector2>
 			{
 				new Vector2(0, -1),
 				new Vector2(1, 0),
@@ -49,7 +50,7 @@ public class Pathfinder: MonoBehaviour
 		}
 		else
 		{
-			Movements = new Vector2[]
+			Movements = new List<Vector2>
 			{
 				new Vector2(-1, -1),
 				new Vector2(0, -1),
@@ -61,6 +62,42 @@ public class Pathfinder: MonoBehaviour
 				new Vector2(-1, 0)
 			};
 		}
+	}
+
+	public Pathfinder SetMovingPriorities(params Direction[] directions){
+		Movements = new List<Vector2>();
+		foreach(Direction d in directions){
+			switch(d){
+			case Direction.N:
+				Movements.Add(new Vector2(0, -1));
+				break;
+			case Direction.E:
+				Movements.Add(new Vector2(1, 0));
+				break;
+			case Direction.W:
+				Movements.Add(new Vector2(-1, 0));
+				break;
+			case Direction.S:
+				Movements.Add(new Vector2(0, 1));
+				break;
+			case Direction.NE:
+				Movements.Add(new Vector2(1, -1));
+				break;
+			case Direction.NW:
+				Movements.Add(new Vector2(-1, -1));
+				break;
+			case Direction.SE:
+				Movements.Add(new Vector2(1, 1));
+				break;
+			case Direction.SW:
+				Movements.Add(new Vector2(-1, 1));
+				break;
+			default:
+				break;
+			}
+		}
+
+		return this;
 	}
 	
 	public void ClearCells()

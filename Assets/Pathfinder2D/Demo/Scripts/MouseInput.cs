@@ -16,8 +16,9 @@ public class MouseInput : MonoBehaviour {
 				var collision = other.GetComponent<PathfinderCell>();
 
 				pathfinder.ClearLogic();
-				pathfinder = pathfinder.From(1, 0).To(collision.x, collision.y);
-				pathfinder = pathfinder.Pathfind();
+				pathfinder.From(1, 0).To(collision.x, collision.y);
+				pathfinder.SetMovingPriorities(Direction.N, Direction.S, Direction.W, Direction.E);
+				pathfinder.Pathfind();
 
 				var gui = GameObject.FindGameObjectWithTag("GUIText");
 				gui.guiText.text = 
