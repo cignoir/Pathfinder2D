@@ -21,6 +21,8 @@ Import Pathfinder2D.unitypackage into your unity project.
 * Easy to customize.
 * Bundled a demo project.
 
+![ways](https://dl.dropboxusercontent.com/u/40069781/Pathfinder2D/arrow.png)
+
 ## Usage
 ```c#
 // Specify width, height and count of ways to walk.
