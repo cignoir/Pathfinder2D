@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class MouseInput : MonoBehaviour {
+	public Pathfinder pathfinder;
 
 	void Start () {
-		
 	}
 	
 	void Update () {
@@ -13,18 +13,11 @@ public class MouseInput : MonoBehaviour {
 		if(Physics.Raycast(ray, out hit, 100)){
 			var other = hit.collider.gameObject;
 			if(other.CompareTag("Cell")){
-				var colision = other.GetComponent<Cell>();
+				var colision = other.GetComponent<PathfinderCell>();
 
-				var pathfinder = new Pathfinder(Field.Width, Field.Height, Ways.FOUR).From(1, 0).To(colision.x, colision.y);
-				pathfinder = pathfinder.Wall(1, 3);
-				var cells = pathfinder.Pathfind().Cells;
-
-				for(int x = 0; x < Field.Width; x++){
-					for(int y = 0; y < Field.Height; y++){
-						Field.Cells[x, y].IsPath = cells[x, y].IsPath;
-					}
-				}
-				
+				pathfinder.ClearLogic();
+				pathfinder = pathfinder.From(1, 0).To(colision.x, colision.y);
+				pathfinder = pathfinder.Pathfind();
 			}
 		}
 	}

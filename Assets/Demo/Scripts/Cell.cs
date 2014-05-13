@@ -2,22 +2,17 @@
 using System.Collections;
 
 public class Cell : MonoBehaviour {
-	public int x;
-	public int y;
+	PathfinderCell pathfinderCell;
 
-	public bool IsWall;
-	public bool IsPath { get; set; }
-	public bool Steps { get; set; }
-	
 	void Start () {
-
+		pathfinderCell = GetComponent<PathfinderCell>();
 	}
 
 	void Update () {
-		if(IsPath)
+		if(pathfinderCell.IsPath)
 		{
 			renderer.material.color = Color.yellow;
-		} else if(IsWall) {
+		} else if(pathfinderCell.IsWall) {
 			renderer.material.color = Color.gray;
 		} else {
 			renderer.material.color = Color.green;
