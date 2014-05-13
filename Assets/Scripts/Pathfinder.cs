@@ -7,6 +7,11 @@ public enum Ways
 	FOUR, EIGHT
 }
 
+public enum Direction
+{
+	N, E, W, S
+}
+
 public class Pathfinder
 {
     static int size_x;
@@ -24,14 +29,17 @@ public class Pathfinder
 
 	public class PathfinderCell
 	{
+		public int x { get; set; }
+		public int y { get; set; }
 		public PathfinderContent ContentCode { get; set; }
 		public int Steps { get; set; }
 		public bool IsPath { get; set; }
 		public bool IsWall {
 			get { return ContentCode == PathfinderContent.Wall; }
 		}
+		public Direction Direction { get; set; }
 
-		public PathfinderCell(){
+		public PathfinderCell(int x, int y){
 			ContentCode = PathfinderContent.Empty;
 			Steps = DEFAULT_STEPS;
 		}
@@ -39,6 +47,7 @@ public class Pathfinder
 
 	public Vector2[] Movements { get; set; }
 	public PathfinderCell[,] Cells { get; set; }
+	public List<PathfinderCell> Route { get; set; }
 
 	public Pathfinder(int size_x, int size_y, Ways ways)
 	{
@@ -46,6 +55,7 @@ public class Pathfinder
 		Pathfinder.size_y = size_y;
 
 		Cells = new PathfinderCell[size_x, size_y];
+		Route = new List<PathfinderCell>();
 
 		InitMovements(ways);
 		ClearCells();
@@ -83,7 +93,7 @@ public class Pathfinder
 	{
 		foreach (Vector2 point in AllCells())
 		{
-			Cells[(int)point.x, (int)point.y] = new PathfinderCell();
+			Cells[(int)point.x, (int)point.y] = new PathfinderCell((int)point.x, (int)point.y);
 		}
 	}
 	
@@ -231,6 +241,7 @@ public class Pathfinder
 		}
 
 		Cells[pointX, pointY].IsPath = true;
+		Route.Add(Cells[pointX, pointY]);
 		
 		while (true)
 		{
@@ -252,6 +263,7 @@ public class Pathfinder
 				Cells[(int)lowestVector2.x, (int)lowestVector2.y].IsPath = true;
 				pointX = (int)lowestVector2.x;
 				pointY = (int)lowestVector2.y;
+				Route.Add(Cells[pointX, pointY]);
 			}
 			else
 			{
@@ -260,7 +272,25 @@ public class Pathfinder
 			
 			if (Cells[pointX, pointY].ContentCode == PathfinderContent.Start)
 			{
+				Cells[pointX, pointY].IsPath = true;
+				Route.Add(Cells[pointX, pointY]);
 				break;
+			}
+		}
+
+		Route.Reverse();
+
+		for(int i = 0; i < Route.Count - 1; i++){
+			if(Route[i + 1].x > Route[i].x){
+				Route[i].Direction = Direction.E;
+			} else if(Route[i + 1].x < Route[i].x){
+				Route[i].Direction = Direction.W;
+			} else {
+				if(Route[i + 1].y > Route[i].y){
+					Route[i].Direction = Direction.N;
+				} else if(Route[i + 1].y < Route[i].y){
+					Route[i].Direction = Direction.S;
+				}
 			}
 		}
 	}
