@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public enum Ways
 {
@@ -65,38 +66,44 @@ public class Pathfinder: MonoBehaviour
 	}
 
 	public Pathfinder SetMovingPriorities(params Direction[] directions){
-		Movements = new List<Vector2>();
-		foreach(Direction d in directions){
-			switch(d){
+		if(directions[0] == Direction.E || directions[0] == Direction.W){
+			directions = directions.Where(d => d == Direction.N || d == Direction.S).Concat(directions.Where(d => d == Direction.E || d == Direction.W)).ToArray();
+		} else {
+			directions = directions.Where(d => d == Direction.E || d == Direction.W).Concat(directions.Where(d => d == Direction.N || d == Direction.S)).ToArray();
+		}
+
+		for(int i = 0; i < directions.Length; i++){
+			switch(directions[i]){
 			case Direction.N:
-				Movements.Add(new Vector2(0, -1));
+				Movements.Insert(i, new Vector2(0, -1));
 				break;
 			case Direction.E:
-				Movements.Add(new Vector2(1, 0));
+				Movements.Insert(i, new Vector2(1, 0));
 				break;
 			case Direction.W:
-				Movements.Add(new Vector2(-1, 0));
+				Movements.Insert(i, new Vector2(-1, 0));
 				break;
 			case Direction.S:
-				Movements.Add(new Vector2(0, 1));
+				Movements.Insert(i, new Vector2(0, 1));
 				break;
 			case Direction.NE:
-				Movements.Add(new Vector2(1, -1));
+				Movements.Insert(i, new Vector2(1, -1));
 				break;
 			case Direction.NW:
-				Movements.Add(new Vector2(-1, -1));
+				Movements.Insert(i, new Vector2(-1, -1));
 				break;
 			case Direction.SE:
-				Movements.Add(new Vector2(1, 1));
+				Movements.Insert(i, new Vector2(1, 1));
 				break;
 			case Direction.SW:
-				Movements.Add(new Vector2(-1, 1));
+				Movements.Insert(i, new Vector2(-1, 1));
 				break;
 			default:
 				break;
 			}
 		}
 
+		Movements = Movements.Distinct().ToList<Vector2>();
 		return this;
 	}
 	
@@ -268,6 +275,7 @@ public class Pathfinder: MonoBehaviour
 					lowestVector2.y = moveVector2.y;
 				}
 			}
+
 			if (lowest != 10000)
 			{
 				Cells[(int)lowestVector2.x, (int)lowestVector2.y].IsPath = true;
@@ -308,8 +316,9 @@ public class Pathfinder: MonoBehaviour
 		}
 	}
 	
-	private System.Collections.Generic.IEnumerable<Vector2> ValidMoves(int x, int y)
+	private List<Vector2> ValidMoves(int x, int y)
 	{
+		var list = new List<Vector2>();
 		foreach (Vector2 moveVector2 in Movements)
 		{
 			int newX = (int)(x + moveVector2.x);
@@ -318,9 +327,40 @@ public class Pathfinder: MonoBehaviour
 			if (ValidCoordinates(newX, newY) &&
 			    CellOpen(newX, newY))
 			{
-				yield return new Vector2(newX, newY);
+				list.Add(new Vector2(newX, newY));
 			}
 		}
+
+		return list;
+	}
+
+	public static Direction GetDirectionFromVector2(Vector2 v){
+		Direction direction = Direction.C;
+		if(v.x == 0){
+			if(v.y == 0){
+			} else if(v.y == -1){
+				direction = Direction.N;
+			} else if(v.y == 1){
+				direction = Direction.S;
+			}
+		} else if(v.x == -1){
+			if(v.y == 0){
+				direction = Direction.W;
+			} else if(v.y == -1){
+				direction = Direction.NW;
+			} else if(v.y == 1){
+				direction = Direction.SW;
+			}
+		} else if(v.x == 1){
+			if(v.y == 0){
+				direction = Direction.E;
+			} else if(v.y == -1){
+				direction = Direction.NE;
+			} else if(v.y == 1){
+				direction = Direction.SE;
+			}
+		}
+		return direction;
 	}
 	
 }
